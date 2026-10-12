@@ -10,7 +10,7 @@
 | Студент (прізвище, ім'я, по батькові) | Єльцов Олег Дмитрович|
 | Група |2.01 |
 | Номер варіанта |6 |
-| Індивідуальний домен |kpi.ua |
+| Індивідуальний домен |postgresql.org |
 | «Чужий» домен для завдання A.3.1 (варіант ± 20) | |
 | Середовище виконання | Власний комп’ютер (Windows) |
 | Дата виконання | 09.10.2026|
@@ -26,19 +26,42 @@
 **Команда:**
 
 ```
-<текст команди>
+<$d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s)
+>> $w.Write("GET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()>
 ```
 
 **Набраний запит:**
 
 ```
-<текст запиту, набраний з клавіатури, включно з порожнім рядком>
+<GET / HTTP/1.1
+Host: postgresql.org
+Connection: close>
 ```
 
 **Відповідь:**
 
 ```
-<повний текст відповіді>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s)
+>> $w.Write("GET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 05:36:42 GMT
+Server: Varnish
+X-Varnish: 428901065
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close>
 ```
 
 ---
@@ -48,13 +71,35 @@
 **Команда:**
 
 ```
-<текст команди>
+<$d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s)
+>> $w.Write("GET / HTTP/1.1`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s)
+>> $w.Write("GET / HTTP/1.1`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 05:43:05 GMT
+Server: Varnish
+X-Varnish: 428967837
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close
+>
 ```
 
 ---
@@ -66,13 +111,37 @@
 **Команда:**
 
 ```
-<текст команди>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+PS C:\Users\CyberPc> $foreign = "w3.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s);$w.Write("GET / HTTP/1.1`r`nHost: $foreign`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()  eadToEnd();
+>> $c.Close()>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+PS C:\Users\CyberPc> $foreign = "w3.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $w = New-Object System.IO.StreamWriter($s);$w.Write("GET / HTTP/1.1`r`nHost: $foreign`r`nConnection: close`r`n`r`n")
+>> $w.Flush()
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()  eadToEnd();
+>> $c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 06:52:33 GMT
+Server: Varnish
+X-Varnish: 448856610
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close
+
+
+PS C:\Users\CyberPc>>
 ```
 
 #### A.3.2. Неіснуюче ім'я в полі `Host`
@@ -80,13 +149,30 @@
 **Команда:**
 
 ```
-<текст команди>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET / HTTP/1.1`r`nHost: opism-pr02.invalid`r`nConnection: close`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req);$s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd();$c.Close()>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET / HTTP/1.1`r`nHost: opism-pr02.invalid`r`nConnection: close`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req);$s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd();$c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 07:01:58 GMT
+Server: Varnish
+X-Varnish: 424843062
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close>
 ```
 
 #### A.3.3. Запит без поля `Host` у версії 1.0
@@ -94,13 +180,33 @@
 **Команда:**
 
 ```
-<текст команди>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET / HTTP/1.0`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req)
+>> $s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd();$c.Close()>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET / HTTP/1.0`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req)
+>> $s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd();$c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 07:03:44 GMT
+Server: Varnish
+X-Varnish: 418652609
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close
+>
 ```
 
 Зведення результатів наведено в **Додатку Д**.
