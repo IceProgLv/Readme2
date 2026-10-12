@@ -218,18 +218,50 @@ Connection: close
 **Команда:**
 
 ```
-<текст команди>
+<$d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET /opism-pr02-12345 HTTP/1.1`r`nHost: $d`r`n`r`nGET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req)
+>> $s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc> $d = "postgresql.org"
+>> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+>> $s = $c.GetStream()
+>> $req = "GET /opism-pr02-12345 HTTP/1.1`r`nHost: $d`r`n`r`nGET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n"
+>> $b = [System.Text.Encoding]::ASCII.GetBytes($req)
+>> $s.Write($b, 0,$b.Length)
+>> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+>> $c.Close()
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 07:27:16 GMT
+Server: Varnish
+X-Varnish: 453674176
+Location: https://www.postgresql.org/opism-pr02-12345
+Content-Length: 0
+Connection: keep-alive
+
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 12 Oct 2026 07:27:16 GMT
+Server: Varnish
+X-Varnish: 453674177
+Location: https://www.postgresql.org/
+Content-Length: 0
+Connection: close
+
+
+PS C:\Users\CyberPc>>
 ```
 
-**Кількість отриманих відповідей:**
+**Кількість отриманих відповідей: 2**
 
-**Коди стану отриманих відповідей:**
+**Коди стану отриманих відповідей:301;301**
 
 ---
 
@@ -238,13 +270,35 @@ Connection: close
 **Команда:**
 
 ```
-<текст команди>
+<curl.exe -v --http1.1 http://postgresql.org/ -o /dev/null>
 ```
 
 **Вивід:**
 
 ```
-<повний вивід>
+<PS C:\Users\CyberPc>  curl.exe -v --http1.1 http://postgresql.org/ -o /dev/null
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 217.196.149.50:80...
+* Connected to postgresql.org (217.196.149.50) port 80 (#0)
+> GET / HTTP/1.1
+> Host: postgresql.org
+> User-Agent: curl/7.79.1
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 301 Moved Permanently
+< Date: Mon, 12 Oct 2026 07:29:25 GMT
+< Server: Varnish
+< X-Varnish: 451807489
+< Location: https://www.postgresql.org/
+< Content-Length: 0
+< Connection: keep-alive
+<
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+* Connection #0 to host postgresql.org left intact
+Warning: Failed to create the file /dev/null: No such file or directory
+PS C:\Users\CyberPc>>
 ```
 
 ---
@@ -258,13 +312,42 @@ Connection: close
 **Команда:**
 
 ```
-<текст команди>
+<curl.exe -v --http1.1 https://iana.org/>
 ```
 
 **Набраний запит:**
 
 ```
-<текст запиту>
+<PS C:\Users\CyberPc> curl.exe -v --http1.1 https://iana.org/
+*   Trying 192.0.43.8:443...
+* Connected to iana.org (192.0.43.8) port 443 (#0)
+* schannel: disabled automatic use of client certificate
+* schannel: ALPN, offering http/1.1
+* ALPN, server did not agree to a protocol
+> GET / HTTP/1.1
+> Host: iana.org
+> User-Agent: curl/7.79.1
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 301 Moved Permanently
+< Date: Mon, 12 Oct 2026 07:33:20 GMT
+< Server: Apache
+< Location: https://www.iana.org/
+< Cache-Control: max-age=345600
+< Expires: Fri, 16 Oct 2026 07:33:20 GMT
+< Content-Length: 229
+< Content-Type: text/html; charset=iso-8859-1
+<
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://www.iana.org/">here</a>.</p>
+</body></html>
+* Connection #0 to host iana.org left intact
+PS C:\Users\CyberPc>>
 ```
 
 **Вивід:**
