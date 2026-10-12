@@ -318,6 +318,14 @@ PS C:\Users\CyberPc>>
 **Набраний запит:**
 
 ```
+<GET / HTTP/1.1
+Host: iana.org
+Connection: close>
+```
+
+**Вивід:**
+
+```
 <PS C:\Users\CyberPc> curl.exe -v --http1.1 https://iana.org/
 *   Trying 192.0.43.8:443...
 * Connected to iana.org (192.0.43.8) port 443 (#0)
@@ -347,13 +355,7 @@ PS C:\Users\CyberPc>>
 <p>The document has moved <a href="https://www.iana.org/">here</a>.</p>
 </body></html>
 * Connection #0 to host iana.org left intact
-PS C:\Users\CyberPc>>
-```
-
-**Вивід:**
-
-```
-<повний вивід>
+PS C:\Users\CyberPc>
 ```
 
 ---
